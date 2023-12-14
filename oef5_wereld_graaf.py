@@ -30,12 +30,13 @@ def haversine_distance(node1, node2):
 
     return distance
 
+
 # opstellen graaf knopen
 G = nx.Graph()
-df = pd.read_csv("fullcities.csv", sep=';', encoding='latin-1')
+df = pd.read_csv("https://raw.githubusercontent.com/maverick3007/Hoekenwerk/master/fullcities.csv", sep=';', encoding='latin-1')
 test = df.keys()
 for ind in df.index:
-    if df['country'][ind] == 'Belgium' and  df['population'][ind] > 20000:
+    if df['country'][ind] == "Belgium" and  df['population'][ind] > 10000:
         G.add_node(df['city_ascii'][ind], pos=(df['lng'][ind], df['lat'][ind] ), lat=df['lat'][ind], lng=df['lng'][ind])
 dict(G.nodes(default=1))
 
@@ -57,6 +58,7 @@ for node in G.nodes:
         radius += 5
 
 
+
 start = input("Geef startpunt: ")
 eind = input("Geef eindpunt: ")
 pad = nx.dijkstra_path(G, start, eind, weight='weight')
@@ -71,7 +73,7 @@ while counter < nodecount - 1:
     node = pad[counter]
     counter += 1
     nextnode = pad[counter]
-    G.add_edge(node, nextnode, color='r')
+    G.add_edge(node, nextnode, width=5, color='r')
 
 pos = nx.get_node_attributes(G, 'pos')
 labels = nx.get_edge_attributes(G,'weight')

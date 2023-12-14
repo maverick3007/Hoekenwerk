@@ -13,27 +13,31 @@ nx.set_node_attributes(G, "", "komtvan")
 nx.set_node_attributes(G, False, "bezocht")
 
 
-# wandeling over alle punten volgens Dijkstra vertrekkende van een gegeven punt
+# wandeling over alle knopen volgens Dijkstra vertrekkende van een gegeven punt
 def wandeling(start):
-    # We zoeken het startpunt op
+    # We zoeken de startknoop op
     startpunt = G.nodes[start]
+    print(start, end = " ")
     print(startpunt)
-    # we zetten dat punt als bezocht
+
+    # we zetten die knoop als bezocht
     startpunt["bezocht"]=True
-    # We zoeken alle buren van dit punt op
+    # We zoeken alle buren van deze knoop op
     buren = G.neighbors(start)
 
+    # we nemen de waarde van de startknoop
     afstand_huidigeknoop = startpunt["waarde"]
     kleinste_afstand = float('inf')
     aantal_onbezochteburen = 0
     for buur in buren:
         buurnode = G.nodes[buur]
         bezocht = buurnode["bezocht"]
-
+        # Als de buur al bezocht is slaan we hem over
         if not bezocht:
             aantal_onbezochteburen += 1
             afstand = buurnode["waarde"]
             gewicht_verbinding = G.get_edge_data(start, buur)["weight"]
+            # kandidaat_afstand is de mogelijk kortste afstand
             kandidaat_afstand = afstand_huidigeknoop + gewicht_verbinding
             if kandidaat_afstand < afstand:
                 buurnode['waarde'] = kandidaat_afstand
@@ -41,6 +45,7 @@ def wandeling(start):
             if kandidaat_afstand < kleinste_afstand:
                 kleinste_afstand = kandidaat_afstand
                 kandidaat_punt = buur
+    #als er nog onbezochte buren zijn doen we verder met een nieuwe knoop
     if aantal_onbezochteburen > 0:
         wandeling(kandidaat_punt)
 

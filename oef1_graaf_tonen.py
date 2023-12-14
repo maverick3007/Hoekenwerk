@@ -10,4 +10,6 @@ G.add_weighted_edges_from([("A", "B", 6.0), ("A", "C", 5.0), ("A", "D", 4.0), ("
 # Toon de graaf
 pos=nx.spring_layout(G, seed=5)
 nx.draw(G, pos, with_labels=True)
+labels = nx.get_edge_attributes(G,'weight')
+nx.draw_networkx_edge_labels(G,pos,edge_labels=labels)
 plt.show()
